@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>物件口コミ投稿ページ＆口コミ一覧ページ</h3>
+{% for comment in comments %}
+<div class='col-1 offset-0'>
+  {% if comment.user.picture %}
+    <img style='float:left;' width='70px' height='70px' src='{{ comment.user.picture.url }}'>
+{% endif %}
+</div>
+<div class='col-8 offset-1'>
+  <p>名前: {{ comment.user.username }}</p>
+  <p>{{ comment.comment | linebreaks }}</p>
+</div>
+  <div class='col-10 offset-1'>
+<hr>
+</div>
+{% endfor %}
+{% if user.is_authenticated %}
+<div class='col-4 offset-0'>
+  <form method='POST'>
+  {% csrf_token %}
+  {{ post_house_comment_form.as_p }}
+  <input type='submit' value='コメント送信'>
+  </form>
+</div>
+{% endif %}
+{% endblock %}
