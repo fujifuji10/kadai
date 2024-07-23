@@ -5,14 +5,14 @@
 <div class='col-1 offset-0'>
   {% if comment.user.picture %}
     <img style='float:left;' width='70px' height='70px' src='{{ comment.user.picture.url }}'>
-{% endif %}
+  {% endif %}
 </div>
 <div class='col-8 offset-1'>
   <p>名前: {{ comment.user.username }}</p>
   <p>{{ comment.comment | linebreaks }}</p>
 </div>
-  <div class='col-10 offset-1'>
-<hr>
+<div class='col-10 offset-1'>
+  <hr>
 </div>
 {% endfor %}
 {% if user.is_authenticated %}

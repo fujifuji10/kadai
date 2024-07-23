@@ -21,16 +21,16 @@ class Housing(models.Model):
   def __str__(self):
     return self.name
   
-class HousingPicturesManager(models.Manager):
-  def fetch_by_houses_id(self, house_id):
-    return self.filter(house_id=house_id).order_by('id').all() 
+# class HousingPicturesManager(models.Manager):
+#     def fetch_by_housing_id(self, id):
+#       return self.filter(id=id).order_by('id').all() 
   
 class HousingPictures(models.Model):
   picture = models.FileField(upload_to='picture/')
   house = models.ForeignKey(
     Housing, on_delete=models.CASCADE
   )
-  objects = HousingPicturesManager()
+  # objects = HousingPicturesManager()
   
   class Meta:
     db_table = 'housing_pictures'
@@ -39,8 +39,8 @@ class HousingPictures(models.Model):
     return self.house.name
   
 class HouseCommentsManager(models.Manager):
-  def fetch_by_housing_id(self, housing_id):
-    return self.filter(id=housing_id).order_by('id').all() 
+  def fetch_by_pk(self, pk):
+    return self.filter(id=pk).order_by('pk').all() 
     
 class HouseComments(models.Model):
   
@@ -48,7 +48,6 @@ class HouseComments(models.Model):
   user = models.ForeignKey(
     'accounts.Users', on_delete=models.CASCADE
   )
-  created_at = models.DateTimeField(null=True,blank=True)
   objects = HouseCommentsManager()
   
   class Meta:

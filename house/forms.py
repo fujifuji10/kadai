@@ -30,7 +30,6 @@ class DeleteHouseForm(forms.ModelForm):
     fields = []
     
 class PostHouseCommentForm(forms.ModelForm):
-  name = forms.CharField(label='投稿者')
   comment = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 5, 'cols': 60})) #rows=行数 cols=列幅（120/OO)
   
   class Meta:

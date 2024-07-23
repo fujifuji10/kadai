@@ -56,22 +56,23 @@ class HousingListView(LoginRequiredMixin, ListView):
 #     }
 #   )
 
-def post_house_comments(request, id):
+def post_house_comments(request, pk):
   post_house_comment_form = forms.PostHouseCommentForm(request.POST or None) #requestを送信した結果をコメントモデルに挿入するためのform
-  housing = get_object_or_404(Housing, id=id)
-  comments = HouseComments.objects.fetch_by_housing_id(id) #テーマに対してのコメントを全て取得
+  house = get_object_or_404(Housing, pk=pk)
+  comments = HouseComments.objects.fetch_by_pk(pk) #テーマに対してのコメントを全て取得
   if post_house_comment_form.is_valid():
-    post_house_comment_form.instance.housing = housing #作成されたテーマが対象
+    post_house_comment_form.instance.house = house #作成されたテーマが対象
     post_house_comment_form.instance.user = request.user #ログインしているログインユーザーが対象
     post_house_comment_form.save() #ここまでだとどのテーマに対するコメント？誰がコメント？かわからないので要素を入れる
-    return redirect('house:post_house_comments', id=id)
+    return redirect('house:post_house_comments', pk=pk)
   return render(
     request, 'house/post_house_comments.html', context={
-      'post_house_comment_form': post_house_comment_form,
-      'housing.name': housing.name,
+      'post_house_comment_form':post_house_comment_form,
       'comments':comments,
     }
   )
+  
+
   
 class HouseDetailView(LoginRequiredMixin, DetailView):
   model = Housing
