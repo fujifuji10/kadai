@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="{% url 'account:home' %}">ホーム画面</a>
         <a class="navbar-brand" href="{% url 'account:user_logout' %}">ログアウト</a>
         <a class="navbar-brand" href="{% url 'house:list_house'  %}">物件一覧画面</a>
-        <a class="navbar-brand" href="{% url 'account:user_update' pk=user.id %}">ユーザー情報更新</a>
+        <a class="navbar-brand" href="{% url 'account:user_update' %}">ユーザー情報更新</a>
         {% else %}
         <a class="navbar-brand" href="{% url 'account:welcome' %}">welcome画面です</a>
         {% endif %}
