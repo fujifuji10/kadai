@@ -2,8 +2,11 @@
 {% block content %}
 <div class="col-10 offset-0">
 <h1>口コミ一覧ページです</h1>
-{% if user.is_authenticated %}
+{% if user.is_active %}
 <p><a href='{% url 'account:add_comment' %}'>口コミ新規登録</a></p>
+<hr>
+  <a href='{% url 'account:home' %}'>ホーム画面へ戻る</a>
+  <a href='{% url 'house:list_house' %}'>物件一覧へ戻る</a>
 {% endif %}
 {% comment %} <hr>
 <form method='get' action='{% url 'house:list_comment' %}'>
@@ -24,21 +27,16 @@
   </tr>
 </thead>
 <tbody>
-{% for comments in object.comment_set.all %}
+{% for object in object_list %}
   <tr>
-    <td>{{ comments.username }}</td>
-    <td>{{ comments.comment }}</td>
-    <td>{{ comments.created_at }}</td>
-
-    {% comment %} {% if user.is_authenticated %}
-    <td><a href='{% url 'account:comment_update' pk=user.id %}'>編集</a></td>
-    <td><a href='{% url 'account:comment_delete' pk=user.id %}'>削除</a></td>
-    {% endif %} {% endcomment %}
-    {% comment %} <td>
-      {% for picture in object.pictures_set.all %}
-        <img width='20px' height='20px' src={{ picture.picture.url }}>
-      {% endfor %}
-    </td> {% endcomment %}
+    <td>名前:{{ object.username }}</td>
+    <td>{{ object.comment }}</td>
+    <td>投稿日:{{ object.created_at }}</td>
+    <td>更新日:{{ object.updated_at }}</td>
+    {% if object.user.id == user.id %}
+    <td><a href='{% url 'account:update_comment' object.id %}'>編集</a></td>
+    <td><a href='{% url 'account:delete_comment' object.id %}'>削除</a></td>
+    {% endif %}
   </tr>
 {% endfor %}
 </tbody>

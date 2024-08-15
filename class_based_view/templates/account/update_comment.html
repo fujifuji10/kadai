@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>口コミ更新画面です</h2>
+<h5>入力後、下記の更新ボタンを押してください</h5>
+<form method='POST' enctype='multipart/form-data'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% comment %} <hr>
+  {% for picture in pictures %}
+    <a href='{% url 'store:delete_picture' pk=picture.id %}'><img width='100px' height='100px' src='{{ picture.picture.url }}'></a>
+  {% endfor %}
+  {{ picture_form.as_p }}
+  </hr> {% endcomment %}
+  <input type='submit' value='更新'>
+</form>
+  <hr>
+  <a href='{% url 'account:list_comment' object.id %}'>コメントリストに戻る</a>
+<style>
+img:hover{
+  opacity: 0.2;
+}
+</style>
+{% endblock %}

@@ -34,20 +34,20 @@ class UserUpdateForm(forms.ModelForm):
     model = Users
     fields = ('username', 'age', 'email', 'password') #パスワードは別の画面で更新する動きにする
     
-class PasswordChangeForm(forms.ModelForm):
-  password = forms.CharField(label='パスワード', widget=forms.PasswordInput)
-  confirm_password = forms.CharField(label='パスワード再入力', widget=forms.PasswordInput)
+# class PasswordChangeForm(forms.ModelForm):
+#   password = forms.CharField(label='パスワード', widget=forms.PasswordInput)
+#   confirm_password = forms.CharField(label='パスワード再入力', widget=forms.PasswordInput)
   
-  class Meta():
-    model = Users
-    fields = ('password',)#データが1つでもタプル型として定義するために,をつける
+#   class Meta():
+#     model = Users
+#     fields = ('password',)#データが1つでもタプル型として定義するために,をつける
     
-  def clean(self): #パスワードがどっちも正しいかをチェックするため
-    cleand_data = super().clean()
-    password = cleand_data['password']
-    confirm_password = cleand_data['confirm_password']
-    if password != confirm_password:
-      raise forms.ValidationError('パスワードが異なります')
+#   def clean(self): #パスワードがどっちも正しいかをチェックするため
+#     cleand_data = super().clean()
+#     password = cleand_data['password']
+#     confirm_password = cleand_data['confirm_password']
+#     if password != confirm_password:
+#       raise forms.ValidationError('パスワードが異なります')
   
   def save(self, commit=False):
     user = super().save(commit=False)
@@ -71,3 +71,10 @@ class CommentAddForm(forms.ModelForm):
     obj.update_at = datetime.now()
     obj.save()
     return obj
+  
+class CommentUpdateForm(forms.ModelForm):
+  comment = forms.CharField(label='コメント', widget=forms.Textarea(attrs={'cols':'30', 'rows':'10'}), required=False)
+  
+  class Meta:
+    model = Comments
+    fields = ('comment',) #パスワードは別の画面で更新する動きにする

@@ -15,7 +15,7 @@ from . import forms
 from datetime import datetime
 from django.contrib import messages
 from .models import Housings, HousingPictures
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import PictureUploadForm, UserLoginForm, HouseAddForm, HouseUpdateForm
 import logging
@@ -129,7 +129,7 @@ class HouseUpdateView(SuccessMessageMixin, UpdateView):
   
   def get_success_url(self):
     print(self.object)
-    return reverse_lazy('house/house:list_house', kwargs={'id': self.object.id})
+    return reverse('house/house:list_house', kwargs={'id': self.object.id})
   
   def get_success_message(self, cleaned_data):
     print(cleaned_data)
@@ -137,7 +137,7 @@ class HouseUpdateView(SuccessMessageMixin, UpdateView):
   
   def get_context_data(self, **kwargs):
         context = super(HouseUpdateView, self).get_context_data(**kwargs)
-        context['slug'] = self.kwargs['pk']
+        context['object'] = self.kwargs['pk']
         return context
   
   def post(self, request, *args, **kwargs):
@@ -152,16 +152,6 @@ class HouseDeleteView(DeleteView):
   model = Housings
   template_name = 'house/house_delete.html'
   success_url = reverse_lazy('house:list_house')
-
-class BookRedirectView(RedirectView):
-  url = 'https://google.co.jp'
-  
-  def get_redirect_url(self, *args, **kwargs):
-    book = Housings.objects.first()
-    if 'pk' in kwargs:
-      return reverse_lazy('store:detail_book', kwargs={'pk':kwargs['pk']})
-    return reverse_lazy('store:edit_book', kwargs={'pk':book.pk})
-  #Pkがあれば＝詳細画面に 引数なし＝編集画面に
   
 def delete_picture(request, pk):
   picture = get_object_or_404(HousingPictures, pk=pk)
