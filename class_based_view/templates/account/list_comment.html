@@ -8,16 +8,6 @@
   <a href='{% url 'account:home' %}'>ホーム画面へ戻る</a>
   <a href='{% url 'house:list_house' %}'>物件一覧へ戻る</a>
 {% endif %}
-{% comment %} <hr>
-<form method='get' action='{% url 'house:list_comment' %}'>
-  <p>物件名: <input type='text' name='housing.name' value='{{ housing.name }}'/></p>
-  <p>最寄駅からの距離: <input type='text' name='housing.distance' value='{{ housing.distance }}'/></p>
-  <p>値段で並び替える:
-    昇順<input type='radio' name='order_by_price' value='1' {% if ascending %}checked{% endif %}>
-    降順<input type='radio' name='order_by_price' value='2' {% if descending %}checked{% endif %}>
-  </p>
-  <p><input type='submit' value='実行する'/></p>
-</form> {% endcomment %}
 <hr>
 <table class="table table-striped table-bordered">
 <thead>

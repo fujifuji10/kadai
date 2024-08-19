@@ -22,6 +22,7 @@ from .forms import RegistForm, LoginForm, CommentAddForm
 from django.urls import reverse_lazy, reverse
 from .models import Users, Comments
 from django.contrib.messages.views import SuccessMessageMixin
+from house.models import Housings
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -77,11 +78,16 @@ class UserUpdateView(SuccessMessageMixin, UpdateView):
 class UserCommentListView(ListView):
   model = Comments #一覧表示するモデル
   template_name = 'account/list_comment.html'
+  context_object_name = 'user_comment'
   
   def get_queryset(self):
     qs = super(UserCommentListView, self).get_queryset()
     qs = qs.order_by('-id',)
     return qs
+  
+  # def get_queryset(self):
+  #       comments_id = Housings.id
+  #       return Comments.objects.filter(id=comments_id)
   
   # def get_context_data(self, **kwargs):
   #       context = super(UserCommentListView, self).get_context_data(**kwargs)
